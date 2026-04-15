@@ -1,0 +1,131 @@
+{
+  "project": "UrbanNest",
+  "version": 1,
+  "generated_at": "2026-04-15",
+  "style_system": {
+    "use_case": "photorealistic-natural",
+    "brand_direction": "urban editorial",
+    "location_basis": "Nairobi-inspired fictional demo",
+    "global_constraints": [
+      "no text",
+      "no signage",
+      "no logos",
+      "no watermarks",
+      "no fake UI overlays",
+      "no surreal luxury exaggeration",
+      "no distorted architecture",
+      "no impossible room geometry",
+      "no uncanny decor",
+      "no people"
+    ],
+    "visual_notes": [
+      "premium editorial photography",
+      "warm daylight",
+      "soft shadows",
+      "believable East African residential context",
+      "subtle earth palette with sand, stone, charcoal, olive, and wood tones",
+      "clean, portfolio-ready composition"
+    ]
+  },
+  "assets": [
+    {
+      "id": "hero-home-exterior-01",
+      "category": "hero",
+      "master_filename": "hero-home-exterior-01.png",
+      "output_filename": "hero-home-exterior-01.webp",
+      "source_dir": "source-images/hero",
+      "output_dir": "public/images/hero",
+      "recommended_size": "2400x1350+",
+      "alt": "Premium modern home exterior with warm daylight and landscaped entry",
+      "prompt": "Use case: photorealistic-natural\nAsset type: landing page hero\nPrimary request: wide editorial photo of a premium Nairobi-adjacent family home exterior for a real estate lead generation website\nScene/backdrop: upscale residential compound with lush but controlled landscaping, clean driveway, warm stone and wood finishes, believable gated neighborhood atmosphere\nSubject: modern home exterior with strong curb appeal and realistic architectural proportions\nStyle/medium: premium editorial real estate photography\nComposition/framing: wide composition with generous negative space for headline and CTA overlay, card-safe crop for desktop and mobile\nLighting/mood: soft golden daylight, calm and trustworthy mood, subtle depth\nColor palette: sand, stone, charcoal, olive, warm wood\nMaterials/textures: real stone, glass, wood, concrete, trimmed greenery\nConstraints: no text, no logos, no signage, no watermark, no people, no distorted lines, no exaggerated mansion tropes"
+    },
+    {
+      "id": "listing-karen-villa-cover-01",
+      "category": "listings",
+      "master_filename": "listing-karen-villa-cover-01.png",
+      "output_filename": "listing-karen-villa-cover-01.webp",
+      "source_dir": "source-images/listings",
+      "output_dir": "public/images/listings",
+      "recommended_size": "1800x1200+",
+      "alt": "Detached villa exterior in a green upscale neighborhood",
+      "prompt": "Use case: photorealistic-natural\nAsset type: featured listing cover\nPrimary request: editorial exterior photo of a large detached villa in a leafy upscale Nairobi-inspired neighborhood\nScene/backdrop: gated residential setting with mature greenery, tidy compound, premium but believable surroundings\nSubject: detached villa exterior with tasteful architecture and elegant landscaping\nStyle/medium: premium editorial real estate photography\nComposition/framing: strong single-subject frame optimized for listing cards and featured sections\nLighting/mood: warm daylight with soft shadows, inviting and trustworthy\nColor palette: stone, beige, olive, charcoal, natural greens\nMaterials/textures: stucco, stone, glass, metal gate details, trimmed lawn\nConstraints: no text, no signage, no logos, no watermark, no people, no impossible geometry"
+    },
+    {
+      "id": "listing-kilimani-apartment-living-01",
+      "category": "listings",
+      "master_filename": "listing-kilimani-apartment-living-01.png",
+      "output_filename": "listing-kilimani-apartment-living-01.webp",
+      "source_dir": "source-images/listings",
+      "output_dir": "public/images/listings",
+      "recommended_size": "1800x1200+",
+      "alt": "Bright apartment living room with city-facing windows",
+      "prompt": "Use case: photorealistic-natural\nAsset type: featured listing cover\nPrimary request: bright editorial interior photo of a refined apartment living room with city-facing windows for a Nairobi-inspired listing\nScene/backdrop: contemporary urban apartment interior with a subtle city view beyond the windows\nSubject: elegant living room with natural light, refined furniture, and premium residential styling\nStyle/medium: premium editorial interior photography\nComposition/framing: clean single-room composition that crops well into listing cards\nLighting/mood: daylight-filled, warm, calm, upscale but lived-in\nColor palette: sand, cream, charcoal, muted olive, walnut wood\nMaterials/textures: linen, wood, stone, matte metal, large glass panes\nConstraints: no text, no logos, no watermark, no people, no uncanny furniture, no distorted windows"
+    },
+    {
+      "id": "listing-lavington-kitchen-01",
+      "category": "listings",
+      "master_filename": "listing-lavington-kitchen-01.png",
+      "output_filename": "listing-lavington-kitchen-01.webp",
+      "source_dir": "source-images/listings",
+      "output_dir": "public/images/listings",
+      "recommended_size": "1800x1200+",
+      "alt": "Premium kitchen and dining area with stone and wood textures",
+      "prompt": "Use case: photorealistic-natural\nAsset type: featured listing cover\nPrimary request: editorial photo of a premium kitchen and dining area in a Nairobi-inspired upscale home\nScene/backdrop: clean contemporary residential interior with tasteful decor and warm natural finishes\nSubject: kitchen island and dining area with balanced styling and premium but realistic appliances\nStyle/medium: premium editorial interior photography\nComposition/framing: strong central focus with clean edges for card cropping\nLighting/mood: warm daylight, fresh and inviting, subtle luxury\nColor palette: stone, oak, cream, matte black, soft olive accents\nMaterials/textures: stone counters, wood cabinetry, linen upholstery, ceramic, matte fixtures\nConstraints: no text, no logos, no watermark, no people, no clutter, no impossible reflections"
+    },
+    {
+      "id": "listing-westlands-bedroom-01",
+      "category": "listings",
+      "master_filename": "listing-westlands-bedroom-01.png",
+      "output_filename": "listing-westlands-bedroom-01.webp",
+      "source_dir": "source-images/listings",
+      "output_dir": "public/images/listings",
+      "recommended_size": "1800x1200+",
+      "alt": "Calm upscale bedroom with layered textiles and daylight",
+      "prompt": "Use case: photorealistic-natural\nAsset type: featured listing cover\nPrimary request: calm editorial bedroom photo for an upscale Westlands-inspired apartment or townhouse listing\nScene/backdrop: modern residential bedroom with natural daylight and restrained decor\nSubject: inviting bedroom with layered textiles, premium bedding, and polished but believable styling\nStyle/medium: premium editorial interior photography\nComposition/framing: card-friendly single-room frame with a clear focal point on the bed and natural light\nLighting/mood: soft daylight, restful and premium\nColor palette: warm white, sand, taupe, charcoal, natural wood\nMaterials/textures: linen bedding, soft textiles, wood, matte painted walls, subtle metal details\nConstraints: no text, no logos, no watermark, no people, no artificial showroom look, no warped furniture"
+    },
+    {
+      "id": "listing-kileleshwa-balcony-view-01",
+      "category": "listings",
+      "master_filename": "listing-kileleshwa-balcony-view-01.png",
+      "output_filename": "listing-kileleshwa-balcony-view-01.webp",
+      "source_dir": "source-images/listings",
+      "output_dir": "public/images/listings",
+      "recommended_size": "1800x1200+",
+      "alt": "Apartment balcony lounge with urban residential view",
+      "prompt": "Use case: photorealistic-natural\nAsset type: featured listing cover\nPrimary request: editorial photo of a stylish apartment balcony or lounge area with a Nairobi-inspired neighborhood view\nScene/backdrop: mid-to-upscale urban residential backdrop with greenery and layered city depth, but no landmark dependence\nSubject: balcony seating area with premium residential styling and subtle lifestyle appeal\nStyle/medium: premium editorial real estate photography\nComposition/framing: balcony foreground with a credible neighborhood skyline or streetscape beyond, optimized for listing card crop\nLighting/mood: late afternoon warmth, relaxed and aspirational\nColor palette: stone, olive, charcoal, muted terracotta, natural wood\nMaterials/textures: outdoor textiles, glass railings, concrete, planters, wood or wicker accents\nConstraints: no text, no signage, no logos, no watermark, no people, no distorted skyline"
+    },
+    {
+      "id": "listing-runda-townhouse-exterior-01",
+      "category": "listings",
+      "master_filename": "listing-runda-townhouse-exterior-01.png",
+      "output_filename": "listing-runda-townhouse-exterior-01.webp",
+      "source_dir": "source-images/listings",
+      "output_dir": "public/images/listings",
+      "recommended_size": "1800x1200+",
+      "alt": "Townhouse exterior with clean compound and curb appeal",
+      "prompt": "Use case: photorealistic-natural\nAsset type: featured listing cover\nPrimary request: editorial exterior photo of a refined townhouse or duplex with strong curb appeal in a Nairobi-inspired residential area\nScene/backdrop: clean compound with landscaping, driveway, boundary wall or gate details, premium neighborhood atmosphere\nSubject: townhouse exterior with balanced, believable architecture and residential warmth\nStyle/medium: premium editorial real estate photography\nComposition/framing: exterior-focused card-friendly crop with strong vertical and horizontal lines\nLighting/mood: warm daylight, calm confidence, polished but not overproduced\nColor palette: sandstone, charcoal, olive greenery, warm wood, cream\nMaterials/textures: stucco, stone, concrete pavers, glass, metal gate details\nConstraints: no text, no signage, no logos, no watermark, no people, no oversized mansion cues, no warped lines"
+    },
+    {
+      "id": "support-neighborhood-trust-01",
+      "category": "sections",
+      "master_filename": "support-neighborhood-trust-01.png",
+      "output_filename": "support-neighborhood-trust-01.webp",
+      "source_dir": "source-images/sections",
+      "output_dir": "public/images/sections",
+      "recommended_size": "2000x1200+",
+      "alt": "Calm Nairobi-inspired residential neighborhood streetscape",
+      "prompt": "Use case: photorealistic-natural\nAsset type: website support section image\nPrimary request: calm editorial streetscape image for an About or areas-served section on a Nairobi-inspired real estate website\nScene/backdrop: upscale residential neighborhood with greenery, sidewalks or roadside planting, and believable local urban density\nSubject: neighborhood atmosphere that suggests trust, livability, and premium service coverage\nStyle/medium: premium editorial environmental photography\nComposition/framing: section-banner friendly wide crop with room for nearby UI content\nLighting/mood: soft warm daylight, calm and trustworthy\nColor palette: warm stone, green foliage, charcoal, pale sky, muted earth tones\nMaterials/textures: paving, walls, planted edges, glass, textured facades\nConstraints: no text, no logos, no signage focus, no watermark, no people, no tourist-landmark framing"
+    },
+    {
+      "id": "support-owner-cta-01",
+      "category": "sections",
+      "master_filename": "support-owner-cta-01.png",
+      "output_filename": "support-owner-cta-01.webp",
+      "source_dir": "source-images/sections",
+      "output_dir": "public/images/sections",
+      "recommended_size": "2000x1200+",
+      "alt": "Refined property-owner CTA image with keys, tablet, and residential context",
+      "prompt": "Use case: photorealistic-natural\nAsset type: website support section image\nPrimary request: refined editorial image for a real estate property-owner call-to-action section encouraging owners to list their property\nScene/backdrop: elegant residential tabletop or home entry context with subtle architectural cues nearby\nSubject: a tasteful arrangement of house keys, tablet or clipboard, and real estate paperwork without readable text, designed to feel trustworthy rather than stock-corporate\nStyle/medium: premium editorial still-life photography\nComposition/framing: section-banner friendly composition with clean negative space for UI and CTA copy\nLighting/mood: soft natural daylight, calm, professional, credible\nColor palette: sand, cream, charcoal, olive accents, warm wood\nMaterials/textures: brushed metal keys, linen or paper texture, wood, stone, matte tablet surface\nConstraints: no readable text, no logos, no watermark, no people, no cheesy sales staging, no unrealistic prop layout"
+    }
+  ]
+}
