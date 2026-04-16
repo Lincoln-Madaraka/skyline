@@ -12,8 +12,7 @@
 <p align="center">
   <a href="https://github.com/Lincoln-Madaraka/skyline/stargazers">Stars</a> &middot;
   <a href="https://github.com/Lincoln-Madaraka/skyline/issues">Issues</a> &middot;
-  <a href="https://www.linkedin.com/in/lincoln01/">LinkedIn</a> &middot;
-  <a href="mailto:softwares.lincoln@gmail.com">Contact</a>
+  <a href="https://www.linkedin.com/in/lincoln01/">LinkedIn</a>
 </p>
 
 ---
