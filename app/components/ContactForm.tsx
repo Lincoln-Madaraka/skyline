@@ -76,8 +76,8 @@ export default function ContactForm() {
         <span>What are you looking for?</span>
         <textarea rows={5} value={form.message} onChange={(e) => set("message", e.target.value)} placeholder="Budget bedrooms lifestyle timeline..." />
       </label>
-      <button className="btn" type="submit" disabled={state === "sending"}>
-        {state === "sending" ? "Sending..." : "Send enquiry"}
+      <button className="btn contact-submit" type="submit" disabled={state === "sending"}>
+        {state === "sending" ? "Sending..." : (<>Send enquiry <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginLeft: "0.4rem"}}><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9z"/></svg></>)}
       </button>
       <p className="form-note">We reply within one working day. No marketing spam ever.</p>
     </form>

@@ -7,7 +7,8 @@ export const metadata = { title: "Areas — Skyline" };
 export default function AreasPage() {
   return (
     <>
-      <header className="page-hero">
+      <header className="page-hero dark">
+        <img className="ph-bg" src="/images/sections/support-neighborhood-trust-01.webp" alt="" aria-hidden="true" />
         <div className="page-hero-copy">
           <span className="kicker">Nairobi neighborhoods</span>
           <h1>Six corridors. One city.</h1>

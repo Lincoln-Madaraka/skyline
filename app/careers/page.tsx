@@ -78,7 +78,8 @@ const values = [
 export default function CareersPage() {
   return (
     <>
-      <header className="page-hero">
+      <header className="page-hero dark">
+        <img className="ph-bg" src="/images/hero/hero-home-exterior-01.webp" alt="" aria-hidden="true" />
         <div className="page-hero-copy">
           <span className="kicker">Careers</span>
           <h1>Build the most trusted home for Nairobi real estate.</h1>
