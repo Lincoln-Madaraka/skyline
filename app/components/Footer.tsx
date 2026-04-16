@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LegalLinks from "./LegalLinks";
 
 export default function Footer() {
   return (
@@ -60,11 +61,7 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <div>© {new Date().getFullYear()} Skyline. All rights reserved.</div>
-        <div className="legal">
-          <Link href="/contact">Privacy</Link>
-          <Link href="/contact">Terms</Link>
-          <Link href="/contact">Cookies</Link>
-        </div>
+        <LegalLinks />
       </div>
     </footer>
   );

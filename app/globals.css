@@ -298,9 +298,24 @@ footer.site-footer { background: var(--charcoal); color: #d6d3cd; padding: 4rem 
   display: flex; justify-content: space-between; align-items: center; gap: 1rem;
   font-size: 0.82rem; color: #8a8780;
 }
-.footer-bottom .legal { display: flex; gap: 1.5rem; }
-.footer-bottom .legal a { color: #8a8780; text-decoration: none; }
-.footer-bottom .legal a:hover { color: #e8ddc9; }
+.footer-bottom .legal { display: flex; gap: 0.8rem; }
+.legal-link { background: none; border: 1px solid rgba(255,255,255,0.08); color: #8a8780; font: inherit; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.75rem; border-radius: 6px; transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease; }
+.legal-link:hover { color: #e8ddc9; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); }
+
+/* Legal modal */
+.legal-modal { width: min(560px, 100%); }
+.legal-header { text-align: center; margin-bottom: 1.5rem; }
+.legal-header-icon { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, rgba(138,106,72,0.12) 0%, rgba(138,106,72,0.04) 100%); display: flex; align-items: center; justify-content: center; color: var(--wood); margin: 0 auto 1rem; }
+.legal-sections { display: flex; flex-direction: column; gap: 0; }
+.legal-section { display: flex; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid rgba(138,106,72,0.08); }
+.legal-section:last-child { border-bottom: none; }
+.legal-section-icon { width: 36px; height: 36px; border-radius: 8px; background: #f5f1eb; display: flex; align-items: center; justify-content: center; color: var(--wood); flex-shrink: 0; margin-top: 0.1rem; }
+.legal-section h4 { margin: 0 0 0.3rem; font-size: 0.95rem; color: var(--charcoal); }
+.legal-section p { margin: 0; font-size: 0.88rem; color: #5a5347; line-height: 1.6; }
+.legal-footer { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(138,106,72,0.08); text-align: center; }
+.legal-footer p { margin: 0; font-size: 0.82rem; color: #8a8370; }
+.legal-footer a { color: var(--wood); text-decoration: none; font-weight: 500; }
+.legal-footer a:hover { text-decoration: underline; }
 
 /* Clickable card */
 .card-link { display: block; text-decoration: none; color: inherit; }
