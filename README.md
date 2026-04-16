@@ -35,7 +35,7 @@ Skyline is a real estate platform focused exclusively on Nairobi's premium resid
 - [Next.js 14](https://nextjs.org/) -- App router, server components, file-based routing
 - [React 18](https://react.dev/) -- Client-side interactivity, modals, slideshows
 - [TypeScript](https://www.typescriptlang.org/) -- Type-safe data layer and components
-- Vanilla CSS -- No framework, hand-written responsive styles with CSS variables
+- [Vanilla CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) -- No framework, hand-written responsive styles with CSS variables
 
 ---
 
