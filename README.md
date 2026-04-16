@@ -113,18 +113,14 @@ If you find this project useful or interesting, consider giving it a star on Git
 
 ---
 
-## Hire me / Collaborate
+## License
 
-I am open to freelance work, collaborations and full-time opportunities in software engineering.
-
-- **Email**: [softwares.lincoln@gmail.com](mailto:softwares.lincoln@gmail.com)
-- **LinkedIn**: [linkedin.com/in/lincoln01](https://www.linkedin.com/in/lincoln01/)
-- **GitHub**: [github.com/Lincoln-Madaraka](https://github.com/Lincoln-Madaraka)
-
-Whether you need a website built from scratch, a real estate platform, or any web application -- reach out and let's talk.
+This project is open source under the [MIT License](LICENSE). Contributions, forks and pull requests are welcome.
 
 ---
 
-## License
+## About the developer
 
-This project is available for personal and educational use. For commercial licensing, contact [softwares.lincoln@gmail.com](mailto:softwares.lincoln@gmail.com).
+I build polished, production-ready web applications from scratch -- real estate platforms, SaaS dashboards, marketing sites, and anything in between. Skyline is an example of what I can deliver: responsive design, clean architecture, smooth interactions, and attention to detail.
+
+If you need something similar or bigger, find me on [LinkedIn](https://www.linkedin.com/in/lincoln01/) or check out more of my work on [GitHub](https://github.com/Lincoln-Madaraka).
