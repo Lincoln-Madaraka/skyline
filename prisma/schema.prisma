@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  BUYER
+  REALTOR
+  ADMIN
+}
+
+enum ListingStatus {
+  DRAFT
+  PUBLISHED
+  SOLD
+  HIDDEN
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
+
+enum ResetStatus {
+  PENDING
+  FULFILLED
+  CANCELLED
+}
+
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  phone          String?
+  passwordHash   String
+  role           Role     @default(BUYER)
+  avatarUrl      String?
+  bio            String?  @db.Text
+  realtorApproved Boolean @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  properties     Property[]     @relation("RealtorProperties")
+  inquiries      Inquiry[]      @relation("BuyerInquiries")
+  savedListings  SavedListing[]
+  resetRequests  PasswordResetRequest[]
+}
+
+model Property {
+  id            String        @id @default(cuid())
+  realtorId     String
+  realtor       User          @relation("RealtorProperties", fields: [realtorId], references: [id], onDelete: Cascade)
+  title         String
+  slug          String        @unique
+  area          String
+  propertyType  String
+  status        ListingStatus @default(PUBLISHED)
+  saleStatus    String        @default("For Sale")
+  priceLabel    String
+  priceValue    Decimal?      @db.Decimal(14, 2)
+  beds          Int
+  baths         Int
+  parking       Int?
+  plotSize      String?
+  yearBuilt     Int?
+  summary       String        @db.Text
+  quickFact     String?       @db.Text
+  about         String?       @db.LongText
+  amenities     String?       @db.Text
+  highlights    String?       @db.LongText
+  coverImage    String?
+  views         Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  images        PropertyImage[]
+  inquiries     Inquiry[]
+  savedBy       SavedListing[]
+
+  @@index([area])
+  @@index([status])
+  @@index([realtorId])
+}
+
+model PropertyImage {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  url        String
+  alt        String?
+  position   Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([propertyId])
+}
+
+model Inquiry {
+  id         String        @id @default(cuid())
+  propertyId String
+  property   Property      @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  buyerId    String?
+  buyer      User?         @relation("BuyerInquiries", fields: [buyerId], references: [id], onDelete: SetNull)
+  name       String
+  email      String
+  phone      String?
+  message    String        @db.Text
+  status     InquiryStatus @default(NEW)
+  createdAt  DateTime      @default(now())
+
+  @@index([propertyId])
+  @@index([buyerId])
+  @@index([status])
+}
+
+model SavedListing {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, propertyId])
+  @@index([userId])
+}
+
+model PasswordResetRequest {
+  id           String      @id @default(cuid())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reason       String?     @db.Text
+  status       ResetStatus @default(PENDING)
+  tempPassword String?
+  createdAt    DateTime    @default(now())
+  fulfilledAt  DateTime?
+
+  @@index([userId])
+  @@index([status])
+}

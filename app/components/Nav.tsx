@@ -77,14 +77,15 @@ export default function Nav() {
           <li className="nav-auth-wrap">
             {user ? (
               <div className="nav-user">
+                <Link className="nav-link" href="/dashboard">Dashboard</Link>
                 <span className="nav-user-name">Hi {user.name.split(" ")[0]}</span>
                 {saved.length > 0 && <span className="nav-saved-pill">{saved.length}</span>}
                 <button className="linklike" onClick={signOut}>Sign out</button>
               </div>
             ) : (
               <div className="nav-auth">
-                <button className="linklike" onClick={() => openAuth("signin")}>Sign in</button>
-                <button className="btn small" onClick={() => openAuth("signup")}>Create account</button>
+                <Link className="linklike" href="/login">Sign in</Link>
+                <Link className="btn small" href="/signup">Create account</Link>
               </div>
             )}
           </li>

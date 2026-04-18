@@ -3,41 +3,46 @@ import { useState } from "react";
 import { useAccount } from "./AccountContext";
 import type { Listing } from "@/lib/listings";
 
-export default function ViewingRequest({ listing }: { listing: Listing }) {
+export default function ViewingRequest({ listing, propertyId }: { listing: Listing; propertyId: string }) {
   const { user, openAuth } = useAccount();
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState("");
   const [intent, setIntent] = useState<"viewing" | "more-info" | "agreement">("viewing");
   const [note, setNote] = useState("");
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    const payload = {
-      name: user?.name,
-      email: user?.email,
-      intent,
-      listing: listing.id,
-      listingTitle: listing.title,
-      preferredDate: date,
-      message: note,
-      area: listing.area,
-    };
+    if (!user) return;
+    setSubmitting(true);
+    setError(null);
+    const prefix = intent === "viewing"
+      ? `Viewing request${date ? ` — preferred date ${date}` : ""}:\n`
+      : intent === "more-info" ? "More info request:\n" : "Start buying process:\n";
+    const message = `${prefix}${note || "(no additional note)"}`;
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("/api/inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          propertyId,
+          name: user.name,
+          email: user.email,
+          message,
+        }),
       });
-      if (!res.ok) throw new Error();
-    } catch {
-      const subject = encodeURIComponent(`Skyline: ${intent} for ${listing.title}`);
-      const body = encodeURIComponent(
-        `Listing: ${listing.title} (${listing.id})\nArea: ${listing.area}\nPrice: ${listing.price}\nIntent: ${intent}\nPreferred date: ${date}\n\nFrom: ${user?.name} <${user?.email}>\n\n${note}`
-      );
-      window.location.href = `mailto:softwares.lincoln@gmail.com?subject=${subject}&body=${body}`;
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to send");
+      }
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setSubmitting(false);
     }
-    setSent(true);
   }
 
   const label: Record<string, string> = {
@@ -95,10 +100,11 @@ export default function ViewingRequest({ listing }: { listing: Listing }) {
                     <span>Anything else?</span>
                     <textarea rows={4} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Financing questions specific rooms timing..." />
                   </label>
+                  {error && <div className="auth-error">{error}</div>}
                   <div className="modal-meta">
                     Sending as <strong>{user?.name}</strong> &lt;{user?.email}&gt;
                   </div>
-                  <button className="btn" type="submit">Send request</button>
+                  <button className="btn" type="submit" disabled={submitting}>{submitting ? "Sending…" : "Send request"}</button>
                 </form>
               </>
             )}

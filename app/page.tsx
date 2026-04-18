@@ -1,13 +1,22 @@
 import Link from "next/link";
-import { listings } from "@/lib/listings";
 import { areas } from "@/lib/areas";
+import { prisma } from "@/lib/prisma";
+import { dbToListing } from "@/lib/propertyAdapter";
 import HeroSlideshow from "./components/HeroSlideshow";
 import BrandMarquee from "./components/BrandMarquee";
 import ListingCard from "./components/ListingCard";
 import Reveal from "./components/Reveal";
 
-export default function Home() {
-  const featuredListings = listings.slice(0, 3);
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const rows = await prisma.property.findMany({
+    where: { status: "PUBLISHED" },
+    orderBy: { createdAt: "desc" },
+    take: 3,
+    include: { images: { orderBy: { position: "asc" }, take: 1 } },
+  });
+  const featuredListings = rows.map(dbToListing);
   const featuredAreas = areas.slice(0, 4);
   return (
     <>
@@ -45,7 +54,7 @@ export default function Home() {
         <Reveal delay={80}><p className="lede">A balanced mix of villas, apartments and townhouses across Nairobi's most sought-after neighborhoods.</p></Reveal>
         <div className="grid">
           {featuredListings.map((l, i) => (
-            <Reveal key={l.id} delay={i * 100}><ListingCard l={l} /></Reveal>
+            <Reveal key={l.dbId} delay={i * 100}><ListingCard l={l} dbId={l.dbId} /></Reveal>
           ))}
         </div>
         <Reveal delay={400}><Link className="btn ghost" href="/listings">View all listings →</Link></Reveal>

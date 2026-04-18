@@ -1,29 +1,43 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { findListing, listings } from "@/lib/listings";
+import { prisma } from "@/lib/prisma";
+import { dbToListing } from "@/lib/propertyAdapter";
 import ListingCard from "@/app/components/ListingCard";
 import ViewingRequest from "@/app/components/ViewingRequest";
 import SaveButton from "@/app/components/SaveButton";
 import Reveal from "@/app/components/Reveal";
 
-export function generateStaticParams() {
-  return listings.map((l) => ({ id: l.id }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const l = findListing(params.id);
-  return { title: l ? `${l.title} — Skyline` : "Listing — Skyline" };
+  const p = await prisma.property.findUnique({ where: { slug: params.id } });
+  return { title: p ? `${p.title} — Skyline` : "Listing — Skyline" };
 }
 
-export default function ListingDetail({ params }: { params: { id: string } }) {
-  const l = findListing(params.id);
-  if (!l) notFound();
+export default async function ListingDetail({ params }: { params: { id: string } }) {
+  const row = await prisma.property.findUnique({
+    where: { slug: params.id },
+    include: { images: { orderBy: { position: "asc" } } },
+  });
+  if (!row || row.status !== "PUBLISHED") notFound();
 
-  const related = listings.filter((x) => x.id !== l.id).slice(0, 3);
+  // Fire-and-forget view increment
+  prisma.property.update({ where: { id: row.id }, data: { views: { increment: 1 } } }).catch(() => null);
+
+  const l = dbToListing(row);
+
+  const relatedRows = await prisma.property.findMany({
+    where: { id: { not: row.id }, status: "PUBLISHED" },
+    orderBy: { createdAt: "desc" },
+    take: 3,
+    include: { images: { orderBy: { position: "asc" }, take: 1 } },
+  });
+  const related = relatedRows.map(dbToListing);
 
   return (
     <>
       <section className="detail-hero">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={l.image} alt={l.alt} />
         <div className="detail-hero-overlay" />
       </section>
@@ -43,8 +57,8 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
             {l.plotSize && <li><span>Size</span><strong>{l.plotSize}</strong></li>}
             {l.yearBuilt && <li><span>Built</span><strong>{l.yearBuilt}</strong></li>}
           </ul>
-          <ViewingRequest listing={l} />
-          <div className="detail-save"><SaveButton id={l.id} /></div>
+          <ViewingRequest listing={l} propertyId={row.id} />
+          <div className="detail-save"><SaveButton id={row.id} /></div>
         </div>
       </section>
 
@@ -55,17 +69,19 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
             {(l.about ?? [l.summary]).map((p, i) => <p key={i}>{p}</p>)}
           </Reveal>
 
-          <Reveal delay={80}>
-            <h3>What stands out</h3>
-            <div className="chip-row large">
-              {l.highlights.map((h) => (
-                <span className="feature-chip" key={h.label} tabIndex={0}>
-                  {h.label}
-                  <span className="feature-tooltip" role="tooltip">{h.tooltip}</span>
-                </span>
-              ))}
-            </div>
-          </Reveal>
+          {l.highlights.length > 0 && (
+            <Reveal delay={80}>
+              <h3>What stands out</h3>
+              <div className="chip-row large">
+                {l.highlights.map((h) => (
+                  <span className="feature-chip" key={h.label} tabIndex={0}>
+                    {h.label}
+                    <span className="feature-tooltip" role="tooltip">{h.tooltip}</span>
+                  </span>
+                ))}
+              </div>
+            </Reveal>
+          )}
 
           {l.amenities && (
             <Reveal delay={160}>
@@ -76,11 +92,13 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
             </Reveal>
           )}
 
-          <Reveal delay={220}>
-            <div className="detail-note">
-              <strong>Skyline note:</strong> {l.quickFact}
-            </div>
-          </Reveal>
+          {l.quickFact && (
+            <Reveal delay={220}>
+              <div className="detail-note">
+                <strong>Skyline note:</strong> {l.quickFact}
+              </div>
+            </Reveal>
+          )}
         </div>
 
         <aside className="detail-side">
@@ -103,15 +121,17 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
         </aside>
       </section>
 
-      <section className="alt-bg">
-        <Reveal><span className="kicker">Keep looking</span></Reveal>
-        <Reveal delay={60}><h2>Related listings.</h2></Reveal>
-        <div className="grid">
-          {related.map((r, i) => (
-            <Reveal key={r.id} delay={i * 80}><ListingCard l={r} /></Reveal>
-          ))}
-        </div>
-      </section>
+      {related.length > 0 && (
+        <section className="alt-bg">
+          <Reveal><span className="kicker">Keep looking</span></Reveal>
+          <Reveal delay={60}><h2>Related listings.</h2></Reveal>
+          <div className="grid">
+            {related.map((r, i) => (
+              <Reveal key={r.dbId} delay={i * 80}><ListingCard l={r} dbId={r.dbId} /></Reveal>
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

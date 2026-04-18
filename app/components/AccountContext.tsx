@@ -1,16 +1,17 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession, signOut as nextSignOut } from "next-auth/react";
+import type { Role } from "@prisma/client";
 
-type User = { name: string; email: string } | null;
+type SessionUser = { id: string; name: string; email: string; role: Role; realtorApproved: boolean } | null;
+
 type Ctx = {
-  user: User;
+  user: SessionUser;
   saved: string[];
-  signIn: (u: { name: string; email: string }) => void;
   signOut: () => void;
   toggleSaved: (id: string) => void;
   openAuth: (mode?: "signin" | "signup") => void;
-  closeAuth: () => void;
-  authOpen: false | "signin" | "signup";
 };
 
 const AccountCtx = createContext<Ctx | null>(null);
@@ -22,38 +23,77 @@ export function useAccount() {
 }
 
 export function AccountProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User>(null);
+  const router = useRouter();
+  const { data: session } = useSession();
   const [saved, setSaved] = useState<string[]>([]);
-  const [authOpen, setAuthOpen] = useState<false | "signin" | "signup">(false);
+  const [hydrated, setHydrated] = useState(false);
+
+  const user: SessionUser = session?.user
+    ? {
+        id: session.user.id,
+        name: session.user.name || session.user.email || "",
+        email: session.user.email || "",
+        role: session.user.role,
+        realtorApproved: session.user.realtorApproved,
+      }
+    : null;
+
+  // Load saved: from DB if logged in, else localStorage
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (user) {
+        try {
+          const res = await fetch("/api/saved");
+          if (res.ok) {
+            const data = await res.json();
+            if (!cancelled) setSaved(data.saved.map((s: { propertyId: string }) => s.propertyId));
+          }
+        } catch {}
+      } else {
+        try {
+          const s = localStorage.getItem("skyline_saved");
+          if (s && !cancelled) setSaved(JSON.parse(s));
+        } catch {}
+      }
+      if (!cancelled) setHydrated(true);
+    })();
+    return () => { cancelled = true; };
+  }, [user?.id]);
 
   useEffect(() => {
+    if (!hydrated) return;
+    if (!user) localStorage.setItem("skyline_saved", JSON.stringify(saved));
+  }, [saved, user, hydrated]);
+
+  async function toggleSaved(id: string) {
+    if (!user) {
+      setSaved((prev) => (prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]));
+      return;
+    }
+    const isSaved = saved.includes(id);
+    setSaved((prev) => (isSaved ? prev.filter((p) => p !== id) : [...prev, id]));
     try {
-      const u = localStorage.getItem("skyline_user");
-      const s = localStorage.getItem("skyline_saved");
-      if (u) setUser(JSON.parse(u));
-      if (s) setSaved(JSON.parse(s));
+      await fetch("/api/saved", {
+        method: isSaved ? "DELETE" : "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ propertyId: id }),
+      });
     } catch {}
-  }, []);
-
-  useEffect(() => {
-    if (user) localStorage.setItem("skyline_user", JSON.stringify(user));
-    else localStorage.removeItem("skyline_user");
-  }, [user]);
-
-  useEffect(() => {
-    localStorage.setItem("skyline_saved", JSON.stringify(saved));
-  }, [saved]);
+  }
 
   const value: Ctx = {
     user,
     saved,
-    signIn: (u) => { setUser(u); setAuthOpen(false); },
-    signOut: () => setUser(null),
-    toggleSaved: (id) =>
-      setSaved((prev) => (prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id])),
-    openAuth: (mode = "signup") => setAuthOpen(mode),
-    closeAuth: () => setAuthOpen(false),
-    authOpen,
+    signOut: async () => {
+      await nextSignOut({ redirect: false });
+      router.push("/");
+      router.refresh();
+    },
+    toggleSaved,
+    openAuth: (mode = "signin") => {
+      router.push(mode === "signup" ? "/signup" : "/login");
+    },
   };
   return <AccountCtx.Provider value={value}>{children}</AccountCtx.Provider>;
 }

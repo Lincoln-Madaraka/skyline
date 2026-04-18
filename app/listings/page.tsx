@@ -1,10 +1,19 @@
-import { listings } from "@/lib/listings";
+import { prisma } from "@/lib/prisma";
+import { dbToListing } from "@/lib/propertyAdapter";
 import ListingCard from "../components/ListingCard";
 import Reveal from "../components/Reveal";
 
 export const metadata = { title: "Listings — Skyline" };
+export const dynamic = "force-dynamic";
 
-export default function ListingsPage() {
+export default async function ListingsPage() {
+  const rows = await prisma.property.findMany({
+    where: { status: "PUBLISHED" },
+    orderBy: { createdAt: "desc" },
+    include: { images: { orderBy: { position: "asc" }, take: 1 } },
+  });
+  const listings = rows.map(dbToListing);
+
   return (
     <>
       <header className="page-hero dark">
@@ -16,11 +25,18 @@ export default function ListingsPage() {
         </div>
       </header>
       <section>
-        <div className="grid">
-          {listings.map((l, i) => (
-            <Reveal key={l.id} delay={i * 70}><ListingCard l={l} /></Reveal>
-          ))}
-        </div>
+        {listings.length === 0 ? (
+          <div className="empty-state" style={{ padding: "4rem 1rem" }}>
+            <strong>No listings yet</strong>
+            Check back soon — new properties are added regularly.
+          </div>
+        ) : (
+          <div className="grid">
+            {listings.map((l, i) => (
+              <Reveal key={l.dbId} delay={i * 70}><ListingCard l={l} dbId={l.dbId} /></Reveal>
+            ))}
+          </div>
+        )}
       </section>
     </>
   );

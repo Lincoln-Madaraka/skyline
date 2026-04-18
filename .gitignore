@@ -6,3 +6,5 @@ node_modules/
 output/imagegen/
 source-images/
 tsconfig.tsbuildinfo
+.npm-cache/
+public/uploads/
